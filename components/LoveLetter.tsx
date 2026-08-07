@@ -4,25 +4,32 @@ import { useState, useEffect } from "react";
 import { motion } from "framer-motion";
 
 const letterText = `
-Dear Minal ❤️
+My Love Dear Minal ❤️,
 
-I don't know where to start, because some feelings are difficult to put into words.
+I have been thinking about how to write this for a long time, but the truth is… no words can ever fully explain what you mean to me.
 
-Sometimes life surprises us in the most unexpected ways. A simple message on 30 December 2024 at 9:13 PM was just a small moment, but I never knew that this little moment would become such a beautiful memory.
+When I look back at our journey, it still feels amazing how everything started with just one simple message on 30 December 2024 at 9:13 PM. At that moment, I had no idea that a small conversation would slowly become one of the most beautiful parts of my life. I never knew that someone I met through a simple message would become someone whose smile could make my entire day better.
 
-Since then, every conversation, every smile, and every little moment has slowly become special.
+From our first conversation to our first meeting, and from those little moments to the memories we created together, every single thing holds a special place in my heart. It was never about expensive places, long hours, or perfect moments. The beauty was always in the fact that it was with you.
 
-I still remember the days when we met, the excitement of finally seeing you, and the happiness of spending those moments together. Every meeting was different, but every meeting meant something special to me.
+I still remember our meetings, the laughs, the little arguments, and even the moments when you got angry with me. 😅 Somehow, even those moments became special because they were a part of our story. Your smile, your happiness, your little habits, and the way you make ordinary moments feel special are things I will always cherish.
 
-What I admire about you is not just your beauty, but the person you are. Your smile, your personality, and the little things that make you unique.
+You came into my life quietly, but your presence created a beautiful difference. You became someone I look forward to talking to, someone whose happiness matters to me, and someone I genuinely want to see smiling.
 
-On your birthday, I don't just want to wish you a happy day. I want to wish you a life full of happiness, success, peace, and endless reasons to smile.
+On your birthday, I don't just want to wish you a happy birthday. I want to thank you. Thank you for every conversation, every memory, every smile, and every moment that made my life a little brighter. Thank you for being the person who unknowingly gave me so many reasons to smile.
 
-Thank you for becoming a beautiful part of my life.
+I hope life gives you everything your heart wishes for. I hope you always stay happy, keep shining, and never forget how special you are.
 
-Happy Birthday Minal ❤️🎂
+I don't know what the future has written for us, but I know that meeting you will always remain one of the most beautiful chapters of my life. And no matter where life takes us, I will always be grateful for the memories we created and the happiness you brought into my world.
 
-With lots of love ❤️
+This little website is just a small attempt to show you how much these moments mean to me. Every picture, every word, and every memory here carries a small piece of my feelings for you.
+
+Happy Birthday, my favorite person. ❤️🎂
+
+Always smile, because your smile is one of the most beautiful things in my world.
+
+With all my love ❤️
+
 `;
 
 export default function LoveLetter() {
