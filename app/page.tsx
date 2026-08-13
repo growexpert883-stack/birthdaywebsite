@@ -8,6 +8,7 @@ import Welcome from "@/components/Welcome";
 import Hero from "@/components/Hero";
 import Timeline from "@/components/Timeline";
 import Gallery from "@/components/Gallery";
+import Reasons from "@/components/Reasons";
 import LoveLetter from "@/components/LoveLetter";
 import MusicPlayer from "@/components/MusicPlayer";
 import Cake from "@/components/Cake";
@@ -59,6 +60,7 @@ export default function Home() {
       <Hero />
       <Timeline />
       <Gallery />
+      <Reasons />
       <LoveLetter />
       <Cake />
       <FinalSurprise />

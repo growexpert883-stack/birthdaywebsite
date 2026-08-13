@@ -8,7 +8,7 @@ export default function Countdown({
 }: {
   finished: () => void;
 }) {
-  const birthday = new Date("August 21, 2026 00:00:00").getTime();
+  const birthday = new Date("August 13, 2026 09:00:00").getTime();
 
   const [time, setTime] = useState({
     days: 0,
