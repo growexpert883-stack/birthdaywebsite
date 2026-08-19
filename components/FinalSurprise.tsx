@@ -1,118 +1,113 @@
 "use client";
 
-import { motion } from "framer-motion";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 
 export default function FinalSurprise() {
-
-  const [hearts, setHearts] = useState<number[]>([]);
-
-
-  useEffect(() => {
-
-    setHearts(
-      Array.from({length:40}, (_,i)=>i)
-    );
-
-  }, []);
-
+  const [opened, setOpened] = useState(false);
 
   return (
+    <section className="min-h-screen flex items-center justify-center px-6 py-32 overflow-hidden">
+      <div className="w-full max-w-3xl text-center">
 
-    <section className="relative min-h-screen overflow-hidden bg-black flex items-center justify-center px-6">
+        {!opened ? (
+          <div className="animate-[fadeIn_1s_ease-out]">
 
+            <p className="text-xs md:text-sm uppercase tracking-[0.4em] opacity-40 mb-6">
+              One last thing...
+            </p>
 
-      {/* Floating Hearts */}
+            <h2 className="text-4xl md:text-6xl font-serif leading-tight">
+              Before you leave ❤️
+            </h2>
 
-      {
-        hearts.map((heart)=>(
+            <p className="max-w-xl mx-auto mt-6 text-base md:text-lg opacity-60 leading-relaxed">
+              Everything you saw here was made for one person.
+              And you already know who that person is. 🥹
+            </p>
 
-          <motion.div
+            <button
+              onClick={() => setOpened(true)}
+              className="mt-12 px-9 py-4 rounded-full border
+                         transition-all duration-300
+                         hover:scale-105 hover:shadow-xl"
+            >
+              Open My Last Message ❤️
+            </button>
 
-            key={heart}
+          </div>
+        ) : (
+          <div className="animate-[fadeIn_1.2s_ease-out]">
 
-            initial={{
-              y:500,
-              opacity:0
-            }}
+            {/* Heart */}
+            <div className="text-6xl mb-10 animate-pulse">
+              ❤️
+            </div>
 
-            animate={{
-              y:-900,
-              opacity:[0,1,0]
-            }}
+            <p className="text-xs uppercase tracking-[0.4em] opacity-40 mb-7">
+              For Minal
+            </p>
 
-            transition={{
-              duration:5,
-              delay:heart*0.1,
-              repeat:Infinity
-            }}
+            <h2 className="text-4xl md:text-6xl font-serif">
+              Happy Birthday, My Love.
+            </h2>
 
-            className="absolute text-3xl"
-            style={{
-              left:`${Math.random()*100}%`
-            }}
+            <div className="max-w-2xl mx-auto mt-10 space-y-7">
 
-          >
-            ❤️
+              <p className="text-lg md:text-xl leading-relaxed opacity-75">
+                I don't know if this little website can ever explain
+                everything I feel for you, but I wanted to try.
+              </p>
 
-          </motion.div>
+              <p className="text-lg md:text-xl leading-relaxed opacity-75">
+                I know I annoy you a lot. I tease you, repeat the same
+                things again and again, and sometimes I probably test
+                your patience more than I should. 😂
+              </p>
 
-        ))
-      }
+              <p className="text-lg md:text-xl leading-relaxed opacity-75">
+                But behind all of that is someone who cares about you
+                more than he knows how to explain.
+              </p>
 
+              <p className="text-lg md:text-xl leading-relaxed opacity-75">
+                Sometimes I look at you and genuinely don't know what
+                to say. My heart gets faster, I get nervous, and all I
+                can think about is how much I love being around you.
+              </p>
 
+              <p className="text-xl md:text-2xl font-serif leading-relaxed">
+                I don't love you because you're perfect.
+                <br />
+                I love you because you're you.
+              </p>
 
-      <motion.div
+              <p className="text-xl md:text-2xl font-serif leading-relaxed">
+                And somehow, that's become more than enough for my heart.
+                ❤️
+              </p>
 
-        initial={{
-          opacity:0,
-          scale:0.5
-        }}
+            </div>
 
-        whileInView={{
-          opacity:1,
-          scale:1
-        }}
+            <div className="mt-14">
 
-        transition={{
-          duration:1
-        }}
+              <p className="text-2xl md:text-3xl font-serif">
+                Happy Birthday, Minal. 🎂❤️
+              </p>
 
-        className="relative z-10 text-center max-w-3xl"
+              <p className="mt-4 text-sm opacity-40">
+                Meri jaan. Meri princess. My favourite person My Everthing.
+              </p>
 
-      >
+            </div>
 
+            <div className="mt-12 text-3xl tracking-[0.5em]">
+              ❤️ ✨ ❤️
+            </div>
 
-        <h1 className="text-6xl font-bold text-pink-400">
-          Happy Birthday Minal ❤️
-        </h1>
+          </div>
+        )}
 
-
-        <p className="mt-8 text-xl text-gray-300 leading-relaxed">
-
-          I hope this little surprise brought a smile to your face.
-
-          <br/><br/>
-
-          You are a beautiful person and you deserve all the happiness,
-          love and success in the world.
-
-          <br/><br/>
-
-          Thank you for becoming a special part of my life. ✨
-
-        </p>
-
-
-        <div className="mt-10 text-7xl">
-          🎂 🎉 ❤️
-        </div>
-
-
-      </motion.div>
-
-
+      </div>
     </section>
-
   );
 }
