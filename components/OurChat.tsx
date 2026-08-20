@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useState } from "react";
 
 const messages = [
   { from: "me", text: "Jan 👀" },
@@ -23,9 +23,23 @@ const messages = [
   { from: "her", text: "Haan kro phir 😂❤️" },
 ];
 
+const hearts = [
+  "❤️",
+  "♡",
+  "♥",
+  "❤",
+  "♡",
+  "❤️",
+  "♥",
+  "♡",
+  "❤",
+  "❤️",
+  "♡",
+  "♥",
+];
+
 export default function OurChat() {
   const [visible, setVisible] = useState(0);
-  const chatEndRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     if (visible >= messages.length) return;
@@ -37,62 +51,75 @@ export default function OurChat() {
     return () => clearTimeout(timer);
   }, [visible]);
 
-  useEffect(() => {
-    chatEndRef.current?.scrollIntoView({
-      behavior: "smooth",
-      block: "nearest",
-    });
-  }, [visible]);
-
   return (
-    <section className="min-h-screen flex items-center justify-center px-5 py-24">
-      <div className="w-full max-w-md">
+    <section className="relative min-h-screen overflow-hidden bg-black text-white flex items-center justify-center px-5 py-24">
+
+      {/* Falling Hearts */}
+      <div className="pointer-events-none absolute inset-0 overflow-hidden">
+        {hearts.map((heart, index) => (
+          <span
+            key={index}
+            className="absolute top-[-40px] text-xl opacity-40 animate-[fall_8s_linear_infinite]"
+            style={{
+              left: `${5 + index * 8}%`,
+              animationDelay: `${index * 0.7}s`,
+              animationDuration: `${6 + (index % 4)}s`,
+            }}
+          >
+            {heart}
+          </span>
+        ))}
+      </div>
+
+      <div className="relative z-10 w-full max-w-md">
 
         {/* Heading */}
         <div className="text-center mb-10">
-          <p className="text-sm uppercase tracking-[0.3em] opacity-50 mb-3">
-            Bas aisi hi baatein ❤️
+
+          <p className="text-xs uppercase tracking-[0.35em] text-white/40 mb-4">
+            Just us ❤️
           </p>
 
           <h2 className="text-4xl md:text-5xl font-serif">
-            Hamari Chat 💬
+            Hamari Chat
           </h2>
 
-          <p className="mt-4 opacity-60">
-            Koi special baat nahi... bas hum 😂❤️
+          <p className="mt-4 text-white/50">
+            Kuch special nahi... bas hum 😂❤️
           </p>
+
         </div>
 
-        {/* WhatsApp-style Chat */}
-        <div className="overflow-hidden rounded-[2rem] border shadow-2xl backdrop-blur-md">
+        {/* Chat Box */}
+        <div className="overflow-hidden rounded-[2rem] border border-white/15 bg-white/[0.04] backdrop-blur-xl shadow-2xl">
 
           {/* Header */}
-          <div className="flex items-center gap-3 px-5 py-4 border-b">
-            
+          <div className="flex items-center gap-3 px-5 py-4 border-b border-white/10">
+
             <div className="relative">
-              <div className="w-12 h-12 rounded-full border flex items-center justify-center text-xl">
+              <div className="w-12 h-12 rounded-full bg-white text-black flex items-center justify-center text-xl">
                 ❤️
               </div>
 
-              <span className="absolute bottom-0 right-0 w-3 h-3 rounded-full border-2 bg-green-500" />
+              <span className="absolute bottom-0 right-0 w-3 h-3 rounded-full bg-green-400 border-2 border-black" />
             </div>
 
             <div>
-              <p className="font-medium text-base">
+              <p className="font-medium">
                 Meri Jaanu ❤️
               </p>
 
-              <p className="text-xs opacity-50">
+              <p className="text-xs text-white/40">
                 online
               </p>
             </div>
 
           </div>
 
-          {/* Chat Area */}
-          <div className="px-4 py-5 min-h-[520px] max-h-[600px] overflow-y-auto">
+          {/* Messages */}
+          <div className="px-4 py-5 min-h-[520px]">
 
-            <div className="flex flex-col gap-2">
+            <div className="flex flex-col gap-3">
 
               {messages.slice(0, visible).map((message, index) => (
                 <div
@@ -103,57 +130,68 @@ export default function OurChat() {
                       : "justify-start"
                   }`}
                 >
+
                   <div
-                    className={`
-                      max-w-[82%]
-                      px-4 py-2.5
-                      text-[15px]
-                      leading-relaxed
-                      shadow-sm
-                      animate-[chatMessage_0.35s_ease-out]
-                      ${
-                        message.from === "me"
-                          ? "rounded-2xl rounded-br-md border"
-                          : "rounded-2xl rounded-bl-md border"
-                      }
-                    `}
+                    className={`max-w-[82%] px-4 py-3 text-[15px] leading-relaxed shadow-lg animate-[chatMessage_0.4s_ease-out] ${
+                      message.from === "me"
+                        ? "bg-white text-black rounded-2xl rounded-br-md"
+                        : "bg-black text-white border border-white/20 rounded-2xl rounded-bl-md"
+                    }`}
                   >
+
                     {message.text}
 
-                    <span className="ml-2 text-[10px] opacity-40 whitespace-nowrap">
+                    <span
+                      className={`ml-2 text-[10px] ${
+                        message.from === "me"
+                          ? "text-black/40"
+                          : "text-white/40"
+                      }`}
+                    >
                       {index < 6
-                        ? "11:4" + index
+                        ? `11:4${index}`
                         : index < 12
-                        ? "11:5" + (index - 6)
-                        : "11:6" + (index - 12)}
+                        ? `11:5${index - 6}`
+                        : `11:6${index - 12}`}
                     </span>
+
                   </div>
+
                 </div>
               ))}
 
               {/* Typing */}
               {visible < messages.length && (
-                <div className="flex justify-start mt-1">
-                  <div className="rounded-2xl rounded-bl-md border px-4 py-3">
+                <div className="flex justify-start">
+
+                  <div className="bg-black border border-white/20 rounded-2xl rounded-bl-md px-4 py-3">
+
                     <div className="flex gap-1">
-                      <span className="w-1.5 h-1.5 rounded-full bg-current opacity-40 animate-bounce" />
-                      <span className="w-1.5 h-1.5 rounded-full bg-current opacity-40 animate-bounce [animation-delay:150ms]" />
-                      <span className="w-1.5 h-1.5 rounded-full bg-current opacity-40 animate-bounce [animation-delay:300ms]" />
+
+                      <span className="w-1.5 h-1.5 rounded-full bg-white/50 animate-bounce" />
+
+                      <span className="w-1.5 h-1.5 rounded-full bg-white/50 animate-bounce [animation-delay:150ms]" />
+
+                      <span className="w-1.5 h-1.5 rounded-full bg-white/50 animate-bounce [animation-delay:300ms]" />
+
                     </div>
+
                   </div>
+
                 </div>
               )}
 
-              <div ref={chatEndRef} />
-
             </div>
+
           </div>
 
-          {/* Fake input */}
-          <div className="px-4 py-3 border-t">
-            <div className="rounded-full border px-5 py-3 text-sm opacity-40">
+          {/* Fake Input */}
+          <div className="px-4 py-3 border-t border-white/10">
+
+            <div className="rounded-full border border-white/10 px-5 py-3 text-sm text-white/25">
               Type a message...
             </div>
+
           </div>
 
         </div>
@@ -161,17 +199,67 @@ export default function OurChat() {
         {/* Ending */}
         {visible >= messages.length && (
           <div className="text-center mt-8 animate-[fadeIn_0.8s_ease-out]">
-            <p className="text-sm opacity-60">
+
+            <p className="text-sm text-white/60">
               Aur phir baat chalti hi rehti hai 😂❤️
             </p>
 
-            <p className="mt-3 text-xs opacity-40">
-              ...because somehow we always have something to say.
+            <p className="mt-3 text-xs text-white/30">
+              Somehow, we always have something to say.
             </p>
+
           </div>
         )}
 
       </div>
+
+      {/* Animations */}
+      <style jsx>{`
+        @keyframes fall {
+          0% {
+            transform: translateY(-60px) rotate(0deg);
+            opacity: 0;
+          }
+
+          10% {
+            opacity: 0.45;
+          }
+
+          90% {
+            opacity: 0.35;
+          }
+
+          100% {
+            transform: translateY(110vh) rotate(360deg);
+            opacity: 0;
+          }
+        }
+
+        @keyframes chatMessage {
+          from {
+            opacity: 0;
+            transform: translateY(8px) scale(0.97);
+          }
+
+          to {
+            opacity: 1;
+            transform: translateY(0) scale(1);
+          }
+        }
+
+        @keyframes fadeIn {
+          from {
+            opacity: 0;
+            transform: translateY(10px);
+          }
+
+          to {
+            opacity: 1;
+            transform: translateY(0);
+          }
+        }
+      `}</style>
+
     </section>
   );
 }

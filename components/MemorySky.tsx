@@ -32,32 +32,46 @@ const memories = [
 export default function MemorySky() {
   const [selected, setSelected] = useState<number | null>(null);
 
+  const positions = [
+    "top-[8%] left-[18%]",
+    "top-[20%] right-[20%]",
+    "top-[43%] left-[8%]",
+    "top-[48%] right-[10%]",
+    "bottom-[15%] left-[30%]",
+    "bottom-[8%] right-[28%]",
+  ];
+
   return (
-    <section className="relative min-h-screen overflow-hidden px-6 py-28 flex items-center justify-center">
+    <section className="relative min-h-screen overflow-hidden bg-black text-white px-6 py-28 flex items-center justify-center">
 
       {/* Stars */}
       <div className="absolute inset-0 pointer-events-none">
 
-        <span className="absolute top-[12%] left-[12%] text-xs opacity-40">
+        <span className="absolute top-[12%] left-[12%] text-xs text-white opacity-40">
           ✦
         </span>
 
-        <span className="absolute top-[22%] right-[18%] text-sm opacity-50">
+        <span className="absolute top-[22%] right-[18%] text-sm text-white opacity-50">
           ✦
         </span>
 
-        <span className="absolute top-[65%] left-[8%] text-sm opacity-40">
+        <span className="absolute top-[65%] left-[8%] text-sm text-white opacity-40">
           ✦
         </span>
 
-        <span className="absolute bottom-[12%] right-[12%] text-xs opacity-50">
+        <span className="absolute bottom-[12%] right-[12%] text-xs text-white opacity-50">
           ✦
         </span>
 
-        <span className="absolute top-[48%] right-[7%] text-xs opacity-30">
+        <span className="absolute top-[48%] right-[7%] text-xs text-white opacity-30">
           ✦
         </span>
 
+      </div>
+
+      {/* Subtle center glow */}
+      <div className="absolute inset-0 pointer-events-none">
+        <div className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 w-[450px] h-[450px] rounded-full bg-white/[0.02] blur-3xl" />
       </div>
 
       <div className="relative z-10 w-full max-w-5xl">
@@ -65,15 +79,15 @@ export default function MemorySky() {
         {/* Heading */}
         <div className="text-center mb-14">
 
-          <p className="text-xs md:text-sm uppercase tracking-[0.35em] opacity-40 mb-5">
+          <p className="text-xs md:text-sm uppercase tracking-[0.35em] text-white/40 mb-5">
             Look a little closer...
           </p>
 
-          <h2 className="text-4xl md:text-6xl font-serif">
+          <h2 className="text-4xl md:text-6xl font-serif text-white">
             Our Little Night Sky 🌙
           </h2>
 
-          <p className="mt-5 opacity-60">
+          <p className="mt-5 text-white/60">
             Every star is hiding something for you. ✨
           </p>
 
@@ -83,47 +97,27 @@ export default function MemorySky() {
         <div className="relative mx-auto w-full max-w-3xl h-[430px] md:h-[500px]">
 
           {memories.map((memory, index) => {
-
-            const positions = [
-              "top-[8%] left-[18%]",
-              "top-[20%] right-[20%]",
-              "top-[43%] left-[8%]",
-              "top-[48%] right-[10%]",
-              "bottom-[15%] left-[30%]",
-              "bottom-[8%] right-[28%]",
-            ];
-
             const isSelected = selected === index;
 
             return (
               <button
                 key={index}
                 onClick={() => setSelected(index)}
-                className={`
-                  absolute
-                  ${positions[index]}
-                  w-14 h-14
-                  rounded-full
-                  flex items-center justify-center
-                  text-2xl
-                  transition-all duration-500
-                  hover:scale-150
-                  ${
-                    isSelected
-                      ? "scale-150"
-                      : "animate-pulse"
-                  }
-                `}
+                className={`absolute ${positions[index]} w-14 h-14 rounded-full flex items-center justify-center text-2xl text-white transition-all duration-500 hover:scale-150 ${
+                  isSelected
+                    ? "scale-150 text-white drop-shadow-[0_0_15px_rgba(255,255,255,0.8)]"
+                    : "animate-pulse"
+                }`}
               >
                 ✦
               </button>
             );
           })}
 
-          {/* Center */}
+          {/* Center Moon */}
           <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
 
-            <div className="text-center opacity-20">
+            <div className="text-center text-white/20">
 
               <div className="text-5xl mb-3">
                 🌙
@@ -143,20 +137,18 @@ export default function MemorySky() {
         {selected !== null && (
           <div
             key={selected}
-            className="max-w-xl mx-auto text-center
-                       rounded-3xl border p-8 md:p-10
-                       animate-[fadeIn_0.5s_ease-out]"
+            className="max-w-xl mx-auto text-center rounded-3xl border border-white/15 bg-white/[0.03] p-8 md:p-10 animate-[fadeIn_0.5s_ease-out]"
           >
 
-            <p className="text-xl md:text-2xl font-serif mb-5">
+            <p className="text-xl md:text-2xl font-serif text-white mb-5">
               {memories[selected].title}
             </p>
 
-            <p className="leading-relaxed opacity-70">
+            <p className="leading-relaxed text-white/70">
               {memories[selected].text}
             </p>
 
-            <p className="mt-6 text-xs opacity-30">
+            <p className="mt-6 text-xs text-white/30">
               You found this one. ✨
             </p>
 
@@ -164,6 +156,21 @@ export default function MemorySky() {
         )}
 
       </div>
+
+      <style jsx>{`
+        @keyframes fadeIn {
+          from {
+            opacity: 0;
+            transform: translateY(12px);
+          }
+
+          to {
+            opacity: 1;
+            transform: translateY(0);
+          }
+        }
+      `}</style>
+
     </section>
   );
 }

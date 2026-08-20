@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 import Countdown from "@/components/Countdown";
 import Password from "@/components/Password";
@@ -8,23 +8,45 @@ import Welcome from "@/components/Welcome";
 import Hero from "@/components/Hero";
 import Timeline from "@/components/Timeline";
 import Gallery from "@/components/Gallery";
-import Reasons from "@/components/Reasons";
-import LoveLetter from "@/components/LoveLetter";
 import MusicPlayer from "@/components/MusicPlayer";
 import Cake from "@/components/Cake";
 import FinalSurprise from "@/components/FinalSurprise";
 import FloatingHearts from "@/components/FloatingHearts";
+import LoveLetter from "@/components/LoveLetter";
+import OurChat from "@/components/OurChat";
 import PageLoader from "@/components/PageLoader";
-
-
-
+import Reasons from "@/components/Reasons";
+import MemoryTickets from "@/components/MemoryTickets";
+import ThingsIRemember from "@/components/ThingsIRemember";
+import Heartbeat from "@/components/Heartbeat";
+import ChooseOne from "@/components/ChooseOne";
+import MemorySky from "@/components/MemorySky";
+import DigitalGift from "@/components/DigitalGift";
+import CrazyThings from "@/components/CrazyThings";
+import IfYouWereHere from "@/components/IfYouWereHere";
 
 export default function Home() {
-
   const [stage, setStage] = useState<
     "countdown" | "password" | "content"
   >("countdown");
 
+  useEffect(() => {
+    if ("scrollRestoration" in window.history) {
+      window.history.scrollRestoration = "manual";
+    }
+
+    window.scrollTo({
+      top: 0,
+      left: 0,
+      behavior: "instant",
+    });
+
+    return () => {
+      if ("scrollRestoration" in window.history) {
+        window.history.scrollRestoration = "auto";
+      }
+    };
+  }, []);
 
   if (stage === "countdown") {
     return (
@@ -34,7 +56,6 @@ export default function Home() {
     );
   }
 
-
   if (stage === "password") {
     return (
       <Password
@@ -43,34 +64,49 @@ export default function Home() {
     );
   }
 
-
   return (
     <>
+      <PageLoader />
 
+      <FloatingHearts />
 
-    <PageLoader />
+      <MusicPlayer />
 
-    <FloatingHearts />
+      <main>
+        <Welcome />
 
+        <Hero />
 
-    <MusicPlayer />
+        <Timeline />
 
+        <Gallery />
 
-      <Welcome />
-      <Hero />
-      <Timeline />
-      <Gallery />
-      <Reasons />
-      <LoveLetter />
-      <Cake />
-      <FinalSurprise />
-      {/* 
-        Yahan baad mein add karenge:
-        Timeline
-        Gallery
-        Love Letter
-        Surprise Ending
-      */}
+        <Reasons />
+
+        <OurChat />
+
+        <CrazyThings />
+
+        <MemoryTickets />
+
+        <ThingsIRemember />
+
+        <Heartbeat />
+
+        <IfYouWereHere />
+
+        <ChooseOne />
+
+        <MemorySky />
+
+        <LoveLetter />
+
+        <DigitalGift />
+
+        <Cake />
+
+        <FinalSurprise />
+      </main>
     </>
   );
 }

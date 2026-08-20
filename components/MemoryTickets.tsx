@@ -45,22 +45,25 @@ export default function MemoryTickets() {
   const [open, setOpen] = useState<number | null>(null);
 
   return (
-    <section className="min-h-screen px-6 py-24 flex items-center justify-center">
+    <section className="min-h-screen bg-black text-white px-6 py-24 flex items-center justify-center">
+
       <div className="w-full max-w-5xl">
 
         {/* Heading */}
         <div className="text-center mb-14">
-          <p className="text-sm uppercase tracking-[0.3em] opacity-50 mb-3">
+
+          <p className="text-sm uppercase tracking-[0.3em] text-white/40 mb-3">
             Little moments ❤️
           </p>
 
-          <h2 className="text-4xl md:text-5xl font-serif">
+          <h2 className="text-4xl md:text-5xl font-serif text-white">
             Memories I'd Keep Forever
           </h2>
 
-          <p className="mt-4 opacity-60">
+          <p className="mt-4 text-white/50">
             Some memories don't need a date to be special.
           </p>
+
         </div>
 
         {/* Tickets */}
@@ -72,36 +75,25 @@ export default function MemoryTickets() {
             return (
               <button
                 key={memory.number}
-                onClick={() =>
-                  setOpen(isOpen ? null : index)
-                }
+                onClick={() => setOpen(isOpen ? null : index)}
                 className="text-left w-full group"
               >
+
                 <div
-                  className={`
-                    relative overflow-hidden
-                    rounded-3xl border
-                    p-6 md:p-7
-                    transition-all duration-500
-                    hover:-translate-y-1
-                    hover:shadow-xl
-                    ${
-                      isOpen
-                        ? "min-h-[250px]"
-                        : "min-h-[180px]"
-                    }
-                  `}
+                  className={`relative overflow-hidden rounded-3xl border border-white/15 bg-white/[0.03] p-6 md:p-7 transition-all duration-500 hover:-translate-y-1 hover:border-white/30 hover:bg-white/[0.06] hover:shadow-[0_15px_50px_rgba(255,255,255,0.06)] ${
+                    isOpen ? "min-h-[250px]" : "min-h-[180px]"
+                  }`}
                 >
 
-                  {/* Ticket number */}
+                  {/* Ticket Header */}
                   <div className="flex items-start justify-between">
 
                     <div>
-                      <span className="text-xs tracking-[0.25em] opacity-40">
+                      <span className="text-xs tracking-[0.25em] text-white/40">
                         MEMORY TICKET
                       </span>
 
-                      <p className="text-sm opacity-40 mt-1">
+                      <p className="text-sm text-white/30 mt-1">
                         #{memory.number}
                       </p>
                     </div>
@@ -113,48 +105,70 @@ export default function MemoryTickets() {
                   </div>
 
                   {/* Title */}
-                  <h3 className="text-xl md:text-2xl font-serif mt-8">
+                  <h3 className="text-xl md:text-2xl font-serif mt-8 text-white">
                     {memory.title}
                   </h3>
 
+                  {/* Closed */}
                   {!isOpen && (
-                    <p className="text-xs opacity-40 mt-4">
+                    <p className="text-xs text-white/30 mt-4">
                       Tap to open ❤️
                     </p>
                   )}
 
-                  {/* Open message */}
+                  {/* Open */}
                   {isOpen && (
                     <div className="mt-6 animate-[fadeIn_0.4s_ease-out]">
 
-                      <div className="h-px w-full opacity-20 border-t mb-5" />
+                      <div className="h-px w-full bg-white/10 mb-5" />
 
-                      <p className="text-sm md:text-base leading-relaxed opacity-80">
+                      <p className="text-sm md:text-base leading-relaxed text-white/75">
                         {memory.text}
                       </p>
 
-                      <p className="text-xs opacity-40 mt-6">
+                      <p className="text-xs text-white/30 mt-6">
                         Keep this one. ❤️
                       </p>
 
                     </div>
                   )}
 
-                  {/* Ticket decoration */}
-                  <div className="absolute right-0 top-1/2 -translate-y-1/2 w-3 h-16 border-l border-dashed opacity-20" />
+                  {/* Ticket Decoration */}
+                  <div className="absolute right-0 top-1/2 -translate-y-1/2 w-3 h-16 border-l border-dashed border-white/20" />
+
+                  {/* Small Glow */}
+                  <div className="absolute -right-10 -bottom-10 w-24 h-24 rounded-full bg-red-500/5 blur-2xl pointer-events-none" />
 
                 </div>
+
               </button>
             );
           })}
 
         </div>
 
-        <p className="text-center text-xs opacity-30 mt-10">
+        {/* Bottom Text */}
+        <p className="text-center text-xs text-white/25 mt-10">
           Tap the memories... some things are better opened slowly. ❤️
         </p>
 
       </div>
+
+      {/* Animation */}
+      <style jsx>{`
+        @keyframes fadeIn {
+          from {
+            opacity: 0;
+            transform: translateY(8px);
+          }
+
+          to {
+            opacity: 1;
+            transform: translateY(0);
+          }
+        }
+      `}</style>
+
     </section>
   );
 }

@@ -4,61 +4,164 @@ import { useEffect, useState } from "react";
 
 export default function Heartbeat() {
   const [started, setStarted] = useState(false);
-  const [showMessage, setShowMessage] = useState(false);
+  const [beat, setBeat] = useState(false);
 
   useEffect(() => {
     if (!started) return;
 
-    const timer = setTimeout(() => {
-      setShowMessage(true);
-    }, 3500);
+    const interval = setInterval(() => {
+      setBeat(true);
 
-    return () => clearTimeout(timer);
+      setTimeout(() => {
+        setBeat(false);
+      }, 220);
+    }, 900);
+
+    return () => clearInterval(interval);
   }, [started]);
 
+  const hearts = Array.from({ length: 18 });
+
   return (
-    <>
-      <style jsx>{`
-        @keyframes heartBeat {
-          0% {
-            transform: scale(1);
-          }
+    <section className="relative min-h-screen bg-black text-white flex items-center justify-center px-6 py-28 overflow-hidden">
 
-          8% {
-            transform: scale(1.18);
-          }
+      {/* Falling Hearts */}
+      <div className="absolute inset-0 overflow-hidden pointer-events-none">
+        {hearts.map((_, i) => (
+          <div
+            key={i}
+            className="absolute -top-10 text-red-500 text-lg md:text-xl animate-[fallHeart_7s_linear_infinite]"
+            style={{
+              left: `${(i * 37) % 100}%`,
+              animationDelay: `${i * 0.45}s`,
+              opacity: 0.75,
+            }}
+          >
+            ❤️
+          </div>
+        ))}
+      </div>
 
-          16% {
-            transform: scale(1);
-          }
+      {/* Background Glow */}
+      <div className="absolute inset-0 pointer-events-none">
+        <div className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 w-[500px] h-[500px] rounded-full bg-red-500/5 blur-3xl" />
+      </div>
 
-          24% {
-            transform: scale(1.22);
-          }
+      {/* Main Content */}
+      <div className="relative z-10 w-full max-w-2xl text-center">
 
-          32% {
-            transform: scale(1);
-          }
+        {!started ? (
+          <div className="animate-[fadeIn_0.8s_ease-out]">
 
-          100% {
-            transform: scale(1);
-          }
-        }
+            <p className="text-xs md:text-sm uppercase tracking-[0.35em] text-white/40 mb-5">
+              Just one little thing...
+            </p>
 
-        @keyframes ecg {
-          0% {
+            <h2 className="text-4xl md:text-6xl font-serif text-white">
+              Listen to My Heart ❤️
+            </h2>
+
+            <p className="mt-5 text-white/60 max-w-md mx-auto">
+              There is something I wanted you to hear.
+            </p>
+
+            <button
+              onClick={() => setStarted(true)}
+              className="mt-10 px-8 py-4 rounded-full border border-white/20 bg-white/[0.03] text-white transition-all duration-300 hover:scale-105 hover:bg-white/[0.08] hover:border-white/40 hover:shadow-xl"
+            >
+              Listen ❤️
+            </button>
+
+          </div>
+        ) : (
+          <div className="animate-[fadeIn_0.8s_ease-out]">
+
+            {/* Beating Heart */}
+            <div
+              className={`text-8xl md:text-9xl select-none transition-transform duration-200 ${
+                beat ? "scale-125" : "scale-100"
+              }`}
+            >
+              ❤️
+            </div>
+
+            {/* ECG */}
+            <div className="relative mt-12 w-full max-w-xl mx-auto h-28 overflow-hidden">
+
+              <svg
+                viewBox="0 0 800 100"
+                preserveAspectRatio="none"
+                className="absolute top-0 left-0 w-[200%] h-full animate-[ecgMove_2s_linear_infinite]"
+                fill="none"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  d="M0 50 L70 50 L90 50 L105 50 L120 20 L135 80 L150 35 L165 65 L180 50 L250 50 M400 50 L470 50 L490 50 L505 50 L520 20 L535 80 L550 35 L565 65 L580 50 L650 50"
+                  stroke="#ef4444"
+                  strokeWidth="3"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  className="drop-shadow-[0_0_8px_rgba(239,68,68,0.6)]"
+                />
+              </svg>
+
+            </div>
+
+            {/* Text */}
+            <p className="mt-10 text-lg md:text-xl text-white/70">
+              Every heartbeat has a little reminder of you. ❤️
+            </p>
+
+            <p className="mt-5 text-2xl md:text-3xl font-serif text-white">
+              You are special to me, My darling Minal.
+            </p>
+
+            <p className="mt-6 text-sm text-white/40">
+              Always have been. Always will be. ❤️
+            </p>
+
+          </div>
+        )}
+
+      </div>
+
+      {/* Animations */}
+      <style jsx>{`@keyframes fallHeart {
+  0% {
+    transform: translateY(110vh) rotate(0deg);
+    opacity: 0;
+  }
+
+  10% {
+    opacity: 0.75;
+  }
+
+  90% {
+    opacity: 0.75;
+  }
+
+  100% {
+    transform: translateY(-20vh) rotate(30deg);
+    opacity: 0;
+  }
+}
+        
+        
+
+        @keyframes ecgMove {
+          from {
             transform: translateX(0);
           }
 
-          100% {
+          to {
             transform: translateX(-50%);
           }
         }
 
-        @keyframes fadeUp {
+        @keyframes fadeIn {
           from {
             opacity: 0;
-            transform: translateY(25px);
+            transform: translateY(15px);
           }
 
           to {
@@ -66,205 +169,8 @@ export default function Heartbeat() {
             transform: translateY(0);
           }
         }
-
-        @keyframes pulseGlow {
-          0%,
-          100% {
-            opacity: 0.25;
-            transform: scale(1);
-          }
-
-          50% {
-            opacity: 0.5;
-            transform: scale(1.15);
-          }
-        }
-
-        .heartbeat {
-          animation: heartBeat 0.9s ease-in-out infinite;
-        }
-
-        .ecg {
-          animation: ecg 2s linear infinite;
-        }
-
-        .fade-up {
-          animation: fadeUp 1s ease-out forwards;
-        }
-
-        .glow {
-          animation: pulseGlow 1.8s ease-in-out infinite;
-        }
       `}</style>
 
-      <section className="min-h-screen flex items-center justify-center px-6 py-28 overflow-hidden">
-        <div className="w-full max-w-3xl text-center">
-
-          {/* INTRO */}
-          {!started && (
-            <div className="fade-up">
-
-              <p className="text-xs md:text-sm uppercase tracking-[0.35em] opacity-50 mb-5">
-                There's something I never told you...
-              </p>
-
-              <h2 className="text-4xl md:text-6xl font-serif leading-tight">
-                You do something to my heart. ❤️
-              </h2>
-
-              <p className="max-w-lg mx-auto mt-6 text-base md:text-lg opacity-60 leading-relaxed">
-                I don't know if you've ever noticed it,
-                but there's a little problem I have whenever
-                you're in front of me.
-              </p>
-
-              <button
-                onClick={() => setStarted(true)}
-                className="mt-10 px-8 py-4 rounded-full border
-                           transition-all duration-300
-                           hover:scale-105 hover:shadow-xl"
-              >
-                See what happens ❤️
-              </button>
-
-            </div>
-          )}
-
-          {/* HEARTBEAT */}
-          {started && (
-            <div className="fade-up">
-
-              <p className="text-xs md:text-sm uppercase tracking-[0.35em] opacity-40 mb-10">
-                This is what you do to me...
-              </p>
-
-              {/* HEART */}
-              <div className="relative flex justify-center items-center h-44">
-
-                <div
-                  className="absolute w-40 h-40 rounded-full blur-3xl glow"
-                  style={{
-                    background:
-                      "rgba(244, 63, 94, 0.25)",
-                  }}
-                />
-
-                <div className="relative text-8xl md:text-[120px] heartbeat">
-                  ❤️
-                </div>
-
-              </div>
-
-              {/* ECG */}
-              <div className="relative w-full max-w-2xl h-28 mx-auto mt-5 overflow-hidden">
-
-                <div className="absolute inset-0 flex items-center opacity-20">
-                  <div className="w-full border-t" />
-                </div>
-
-                <div className="absolute left-0 top-0 h-full flex w-[200%] ecg">
-
-                  {/* First ECG */}
-                  <svg
-                    viewBox="0 0 600 100"
-                    className="w-1/2 h-full"
-                    preserveAspectRatio="none"
-                  >
-                    <polyline
-                      points="
-                        0,50
-                        90,50
-                        120,50
-                        135,50
-                        150,15
-                        165,85
-                        180,50
-                        205,50
-                        220,30
-                        235,70
-                        250,50
-                        360,50
-                        390,50
-                        405,12
-                        420,88
-                        435,50
-                        600,50
-                      "
-                      fill="none"
-                      stroke="currentColor"
-                      strokeWidth="3"
-                    />
-                  </svg>
-
-                  {/* Second ECG for seamless loop */}
-                  <svg
-                    viewBox="0 0 600 100"
-                    className="w-1/2 h-full"
-                    preserveAspectRatio="none"
-                  >
-                    <polyline
-                      points="
-                        0,50
-                        90,50
-                        120,50
-                        135,50
-                        150,15
-                        165,85
-                        180,50
-                        205,50
-                        220,30
-                        235,70
-                        250,50
-                        360,50
-                        390,50
-                        405,12
-                        420,88
-                        435,50
-                        600,50
-                      "
-                      fill="none"
-                      stroke="currentColor"
-                      strokeWidth="3"
-                    />
-                  </svg>
-
-                </div>
-
-              </div>
-
-              {/* TEXT */}
-              {showMessage && (
-                <div className="fade-up mt-10 space-y-6">
-
-                  <h3 className="text-2xl md:text-4xl font-serif">
-                    Yeah... that's basically it. 😭❤️
-                  </h3>
-
-                  <p className="max-w-xl mx-auto text-base md:text-lg leading-relaxed opacity-70">
-                    Whenever I see you, my heartbeat gets faster.
-                    I suddenly become nervous, forget half the things
-                    I wanted to say, and somehow just keep looking at you.
-                  </p>
-
-                  <p className="max-w-xl mx-auto text-base md:text-lg leading-relaxed opacity-70">
-                    I don't know what you do to me, Minal...
-                    but whatever it is, I don't want it to stop.
-                  </p>
-
-                  <div className="pt-4">
-                    <p className="text-xl md:text-2xl font-serif">
-                      Maybe you're just my favorite kind of problem. ❤️
-                    </p>
-                  </div>
-
-                </div>
-              )}
-
-            </div>
-          )}
-
-        </div>
-      </section>
-    </>
+    </section>
   );
 }

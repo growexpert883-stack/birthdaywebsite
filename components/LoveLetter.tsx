@@ -29,227 +29,185 @@ Happy Birthday, my favorite person. ❤️🎂
 Always smile, because your smile is one of the most beautiful things in my world.
 
 With all my love ❤️
-
 `;
 
 export default function LoveLetter() {
-
   const [open, setOpen] = useState(false);
   const [text, setText] = useState("");
 
-
-
   useEffect(() => {
-
-    if(!open) return;
-
+    if (!open) return;
 
     let index = 0;
 
-
-    const typing = setInterval(()=>{
-
-      setText(letterText.slice(0,index));
-
+    const typing = setInterval(() => {
+      setText(letterText.slice(0, index));
       index++;
 
-
-      if(index > letterText.length){
+      if (index > letterText.length) {
         clearInterval(typing);
       }
+    }, 35);
 
+    return () => clearInterval(typing);
+  }, [open]);
 
-    },35);
-
-
-    return ()=>clearInterval(typing);
-
-
-  },[open]);
-
-
-
-  const hearts = Array.from({length:12});
-
-
+  const hearts = Array.from({ length: 18 });
 
   return (
+    <section className="relative min-h-screen bg-white text-black flex items-center justify-center px-6 py-24 overflow-hidden">
 
-    <section className="relative min-h-screen bg-black text-white flex items-center justify-center px-6 py-24 overflow-hidden">
+      {/* Soft background glow */}
+      <div className="absolute inset-0 pointer-events-none">
+        <div className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 w-[500px] h-[500px] rounded-full bg-pink-100/60 blur-3xl" />
+      </div>
 
+      {/* Falling / Floating Hearts */}
+      <div className="absolute inset-0 overflow-hidden pointer-events-none">
 
-      {
-        open && hearts.map((_,i)=>(
-
+        {hearts.map((_, i) => (
           <motion.div
-
             key={i}
-
             initial={{
-              y:"100vh",
-              opacity:0
+              y: "110vh",
+              opacity: 0,
+              rotate: 0,
             }}
-
             animate={{
-              y:"-20vh",
-              opacity:[0,1,0]
+              y: "-15vh",
+              opacity: [0, 0.5, 0.35, 0],
+              rotate: [0, 20, -20, 40],
             }}
-
             transition={{
-              duration:6,
-              delay:i*.3,
-              repeat:Infinity
+              duration: 8 + (i % 5),
+              delay: i * 0.45,
+              repeat: Infinity,
+              ease: "linear",
             }}
-
-            className="absolute text-pink-400 text-xl"
-
+            className="absolute text-pink-300"
             style={{
-              left:`${Math.random()*100}%`
+              left: `${(i * 7 + 3) % 97}%`,
+              fontSize: `${16 + (i % 4) * 5}px`,
             }}
-
           >
             ❤️
-
           </motion.div>
+        ))}
 
-        ))
-      }
-
-
+      </div>
 
       {!open ? (
-
         <motion.div
-
           initial={{
-            opacity:0,
-            scale:.7
+            opacity: 0,
+            scale: 0.7,
           }}
-
           whileInView={{
-            opacity:1,
-            scale:1
+            opacity: 1,
+            scale: 1,
           }}
-
-          className="text-center z-10"
-
+          viewport={{ once: true }}
+          className="relative z-10 text-center"
         >
 
-
+          {/* Envelope */}
           <motion.div
-
             animate={{
-              y:[0,-15,0],
-              rotate:[0,5,-5,0]
+              y: [0, -15, 0],
+              rotate: [0, 4, -4, 0],
             }}
-
             transition={{
-              duration:3,
-              repeat:Infinity
+              duration: 3,
+              repeat: Infinity,
             }}
-
-            onClick={()=>setOpen(true)}
-
-            className="text-9xl cursor-pointer"
-
+            onClick={() => setOpen(true)}
+            className="text-9xl cursor-pointer select-none"
           >
-
             💌
-
           </motion.div>
 
-
-
-          <h2 className="mt-8 text-4xl font-bold text-pink-400">
-
+          <h2 className="mt-8 text-4xl md:text-5xl font-serif text-pink-500">
             A Letter For You ❤️
-
           </h2>
 
-
-          <p className="mt-5 text-gray-300">
-
+          <p className="mt-5 text-gray-500">
             Tap the envelope to open your surprise ✨
-
           </p>
 
+          <p className="mt-3 text-xs text-gray-400">
+            There are some things I wanted to say...
+          </p>
 
         </motion.div>
-
-
-
       ) : (
-
-
         <motion.div
-
           initial={{
-            opacity:0,
-            y:80,
-            scale:.8
+            opacity: 0,
+            y: 80,
+            scale: 0.8,
           }}
-
           animate={{
-            opacity:1,
-            y:0,
-            scale:1
+            opacity: 1,
+            y: 0,
+            scale: 1,
           }}
-
           transition={{
-            duration:1
+            duration: 1,
           }}
-
-          className="relative z-10 max-w-3xl w-full bg-[#fffaf5] text-black rounded-3xl p-8 md:p-12 shadow-2xl"
-
+          className="relative z-10 max-w-3xl w-full bg-[#fffaf5] border border-pink-100 text-black rounded-3xl p-8 md:p-12 shadow-[0_20px_70px_rgba(236,72,153,0.15)]"
         >
 
-
           <motion.div
-
             initial={{
-              rotateX:90
+              rotateX: 90,
             }}
-
             animate={{
-              rotateX:0
+              rotateX: 0,
             }}
-
             transition={{
-              duration:1
+              duration: 1,
             }}
-
             className="text-center text-4xl mb-8"
-
           >
-
             💌
-
           </motion.div>
 
-
-
-          <h2 className="text-center text-4xl font-bold text-pink-500 mb-8">
-
+          <h2 className="text-center text-4xl md:text-5xl font-serif text-pink-500 mb-8">
             For Minal ❤️
-
           </h2>
 
+          <div className="w-20 h-px bg-pink-200 mx-auto mb-8" />
 
-
-          <p className="whitespace-pre-line text-lg leading-relaxed">
-
+          <p className="whitespace-pre-line text-base md:text-lg leading-[1.9] text-gray-700">
             {text}
-
           </p>
 
-
+          {text.length >= letterText.length && (
+            <motion.div
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              transition={{ duration: 1 }}
+              className="text-center mt-10 text-2xl"
+            >
+              ❤️
+            </motion.div>
+          )}
 
         </motion.div>
-
       )}
 
+      <style jsx>{`
+        @keyframes softGlow {
+          0%,
+          100% {
+            opacity: 0.3;
+          }
 
+          50% {
+            opacity: 0.6;
+          }
+        }
+      `}</style>
     </section>
-
   );
 }
