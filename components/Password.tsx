@@ -14,7 +14,7 @@ export default function Password({
 
   const checkPassword = () => {
 
-    if (password === "30122024") {
+    if (password === "minallovesmba") {
       unlock();
     } else {
       setError(
